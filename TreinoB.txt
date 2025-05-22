@@ -1,35 +1,37 @@
+Série/Repetição Média/Carga
+
 Pulley com triângulo
-Séries: 4x | Repetições: 4–6 | Carga: 60kg
-Observações: Anterior: 50kg
+4/5/60
+Obs: Anterior: 50kg
 
 Remada cavalinho
-Séries: 4x | Repetições: 4–6 | Carga: 40kg
-Observações: Anterior: 32.5kg
+4/5/40
+Obs: Anterior: 32.5kg
 
 Remada baixa na polia com barra reta
-Séries: 4x | Repetições: 4–6 | Carga: 55kg
-Observações: Anterior: 47.5kg
+4/5/55
+Obs: Anterior: 47.5kg
 
 Pulldown na polia com barra reta
-Séries: 4x | Repetições: 4–6 | Carga: 23kg
-Observações: Anterior: 21.5kg
+4/5/23
+Obs: Anterior: 21.5kg
 
 Face pull na polia com corda
-Séries: 4x | Repetições: 4–6 | Carga: 25kg
-Observações: Anterior: 21.25kg
+4/5/25
+Obs: Anterior: 21.25kg
 
 Reverse fly na polia média
-Séries: 3x | Repetições: 4–6 | Carga: 4.5kg
-Observações:
+3/5/4.5
+Obs:
 
 Rosca direta na polia
-Séries: 4x | Repetições: 4–6 | Carga: 22.5kg
-Observações: Pirâmide crescente. Anterior: 17.5kg (aumento de 0.625kg por série)
+4/5/22.5
+Obs: Pirâmide crescente. Anterior: 17.5kg (aumento de 0.625kg por série)
 
 Rosca alternada com halteres
-Séries: 3x | Repetições: 4–6 | Carga: 12kg
-Observações: Anterior: 10kg
+3/5/12
+Obs: Anterior: 10kg
 
 Rosca martelo na polia com corda
-Séries: 3x | Repetições: 4–6 | Carga: 18kg
-Observações: Anterior: 13.75kg
+3/5/18
+Obs: Anterior: 13.75kg

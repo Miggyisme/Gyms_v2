@@ -17,7 +17,6 @@ exercicios_iniciais = [
 ]
 
 entradas = []
-caminho_arquivo = r"C:\Users\Miguel\Desktop\gyms_V2\treinoA.txt"
 
 rep_values = [
     "4 a 6 repetições",
@@ -29,13 +28,15 @@ rep_values = [
 ]
 
 mapa_reps_para_num = {
-    "4 a 6 repetições": "4",
-    "6 a 8 repetições": "6",
-    "8 a 10 repetições": "8",
-    "10 a 12 repetições": "10",
-    "12 a 15 repetições": "12",
-    "15 a 20 repetições": "15"
+    "4 a 6 repetições": "5",
+    "6 a 8 repetições": "7",
+    "8 a 10 repetições": "9",
+    "10 a 12 repetições": "11",
+    "12 a 15 repetições": "13",
+    "15 a 20 repetições": "17"
 }
+
+mapa_num_para_reps = {v: k for k, v in mapa_reps_para_num.items()}
 
 def salvar_dados():
     caminho = filedialog.asksaveasfilename(
@@ -44,9 +45,10 @@ def salvar_dados():
         title="Salvar treino como"
     )
     if not caminho:
-        return  # cancelado
+        return
     try:
         with open(caminho, "w", encoding="utf-8") as f:
+            f.write("Série/Repetição Média/Carga\n\n")
             for e in entradas:
                 nome = e['nome'].get()
                 series = e['series'].get()
@@ -54,11 +56,10 @@ def salvar_dados():
                 carga = e['carga'].get()
                 obs = e['obs'].get()
                 reps = mapa_reps_para_num.get(reps_str, reps_str)
-                f.write(f"{nome}\nSéries: {series}x | Repetições: {reps} | Carga: {carga}\nObservações: {obs}\n\n")
+                f.write(f"{nome}\n{series}/{reps}/{carga}\nObs: {obs}\n\n")
         messagebox.showinfo("Salvo", f"Dados salvos em:\n{caminho}")
     except Exception as err:
         messagebox.showerror("Erro", f"Não foi possível salvar:\n{err}")
-
 
 def carregar_dados():
     caminho = filedialog.askopenfilename(
@@ -67,35 +68,42 @@ def carregar_dados():
         title="Abrir treino"
     )
     if not caminho:
-        return  # cancelado
+        return
     try:
         with open(caminho, "r", encoding="utf-8") as f:
-            conteudo = f.read().strip()
-        blocos = conteudo.split("\n\n")
+            linhas = f.read().strip().splitlines()
+
+        blocos = []
+        atual = []
+        for linha in linhas[2:]:  # começa a ler a partir da 3ª linha
+            if linha.strip() == "":
+                if atual:
+                    blocos.append(atual)
+                    atual = []
+            else:
+                atual.append(linha)
+        if atual:
+            blocos.append(atual)
+
         for i, bloco in enumerate(blocos):
-            linhas = bloco.splitlines()
-            if i >= len(entradas) or len(linhas) < 3:
+            if i >= len(entradas) or len(bloco) < 3:
                 continue
+            nome, info, obs = bloco[0], bloco[1], bloco[2]
+            series, reps_num, carga = info.split("/")
+            series = series.strip()
+            reps_num = reps_num.strip()
+            carga = carga.strip()
+
             entradas[i]['nome'].delete(0, tk.END)
-            entradas[i]['nome'].insert(0, linhas[0])
-
-            # Extrai valores das repetições e séries
-            partes = linhas[1].split("|")
-            series = partes[0].strip().replace("Séries:", "").replace("x", "").strip()
-            reps = partes[1].strip().replace("Repetições:", "").strip()
-            carga = partes[2].strip().replace("Carga:", "").strip()
-
+            entradas[i]['nome'].insert(0, nome)
             entradas[i]['series'].set(series)
-            entradas[i]['reps'].set(next((k for k, v in mapa_reps_para_num.items() if v == reps), reps))
+            entradas[i]['reps'].set(mapa_num_para_reps.get(reps_num, reps_num))
             entradas[i]['carga'].delete(0, tk.END)
             entradas[i]['carga'].insert(0, carga)
-
-            obs = linhas[2].replace("Observações:", "").strip()
             entradas[i]['obs'].delete(0, tk.END)
-            entradas[i]['obs'].insert(0, obs)
+            entradas[i]['obs'].insert(0, obs.replace("Obs:", "").strip())
     except Exception as e:
         messagebox.showerror("Erro", f"Não foi possível carregar:\n{e}")
-
 
 def gerar_imagem():
     x = root.winfo_rootx()
@@ -110,14 +118,13 @@ def gerar_imagem():
         title="Salvar imagem como"
     )
     if not caminho_img:
-        return  # Usuário cancelou
+        return
 
     try:
         img.save(caminho_img)
         messagebox.showinfo("Imagem salva", f"Imagem salva em:\n{caminho_img}")
     except Exception as e:
         messagebox.showerror("Erro", f"Não foi possível salvar a imagem:\n{e}")
-
 
 def reorganizar_blocos(event=None):
     largura_total = blocos_frame.winfo_width()

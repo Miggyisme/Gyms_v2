@@ -1,0 +1,8 @@
+05-2025
+
+Dorsais: 3140
+Peitoral: 3000
+Ombros: 1104
+Bíceps: 1533
+Tríceps: 1427
+Pernas: 8222
